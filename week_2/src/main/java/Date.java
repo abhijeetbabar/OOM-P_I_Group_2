@@ -56,14 +56,18 @@ public class Date  {
         
 //        2ND WAY
 
-//        if (year % 400 == 0) {
-//        return true;
-//    } 
-//        else if (year % 100 == 0) {
-//        return false;
-//    } 
-//        else return year % 4 == 0;
-//    }
+//        if (year % 4 == 0) // Every fourth year is a leap year
+//            {
+//                if (year % 100 == 0) // Except every 100 is not a leap year ( 100, 200, 300, 400 )
+//                {
+//                    if (year % 1000 != 0) // Except that every 1000 is a leap year ( 1000, 2000, 3000 )
+//                    {
+//                        return true;
+//                    }
+//                }
+//            }
+//            return false;
+//        }
         
     }
     
@@ -81,7 +85,22 @@ public class Date  {
         return 31;
         }
         
-//        OR WE CAN HAVE FOLLOWING IMPLEMENTATION 
+//        OR WE CAN HAVE FOLLOWING IMPLEMENTATIONS
+
+//A
+
+//            if (month == 12) {
+//                month = 1;
+//                year++;
+//            } else {
+//                month++;
+//            }
+//            Date dateOfInterest = new Date(month, month, month);
+//            dateOfInterest.toJulianNumber(1, month, year);
+//            dateOfInterest.mJulianNumber -= 1;
+//            return dateOfInterest.getDay();
+
+//B
 
 //        int lastDayOfMonth;
 //        switch (month) {
