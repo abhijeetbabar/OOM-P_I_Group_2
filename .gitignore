@@ -21,7 +21,3 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/OOMP_Group_2_Assignment/target/
-/target/
-/week_2/target/
-/week_2/nbproject/
