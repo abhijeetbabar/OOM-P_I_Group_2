@@ -8,8 +8,9 @@
  *
  * @author Group2
  */
-public class Date  {
+public class Date {
 
+//    January 1st, 1970
     private int day;
     private int month;
     private int year;
@@ -19,43 +20,68 @@ public class Date  {
         return mJulianNumber;
     }
 
-  
     private Date date;
-    public Date(){
+
+    public Date() {
     }
 
     public Date(int day, int month, int year) {
-      if(!isValidDate(day, month, year)) 
+        if (!isValidDate(day, month, year)) {
             throw new IllegalArgumentException("Invalid Date");
-      this.day = day;
-      this.month = month;
-      this.year = year;
-      this.mJulianNumber = toJulianNumber(day,  month, year);
+        }
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.mJulianNumber = toJulianNumber(day, month, year);
     }
-    
-     public Date( Date date){
-         this.date = date;
-     } 
+
+    public Date(Date date) {
+        this.date = date;
+    }
 
     public int getDay() {
-        return day;
+        return this.day;
     }
 
     public int getMonth() {
-        return month;
+        return this.month;
     }
 
     public int getYear() {
-        return month;
+        return this.year;
     }
 
-   
+    public void setDay(int pDay) {
+        if (pDay >= 1 && pDay <= getLastDayOfMonth(this.month, this.year)) {
+            this.day = pDay;
+        } else {
+            System.out.println("Date can not be greater than "
+                    + getLastDayOfMonth(this.month, this.year) + 
+                    " in month "+this.month+" of "+this.year+" year.");
+            System.out.println("Please select option 1 for continue. \n");
+        }
+    }
+
+    public void setMonth(int pMonth) {
+        if (pMonth < 13) {
+            this.month = pMonth;
+        } else {
+            System.out.println("Month can not be greater than 12.");
+        }
+    }
+
+    public void setYear(int pYear) {
+        if (pYear > 0) {
+            this.year = pYear;
+        } else {
+            System.out.println("Year is invalid. ");
+        }
+    }
 
     public static boolean isLeapYear(int year) {
         return (year % 100 != 0) && (year % 4 == 0) || year % 100 == 0 && (year % 400 == 0);
-        
-//        2ND WAY
 
+//        2ND WAY
 //        if (year % 4 == 0) // Every fourth year is a leap year
 //            {
 //                if (year % 100 == 0) // Except every 100 is not a leap year ( 100, 200, 300, 400 )
@@ -68,27 +94,21 @@ public class Date  {
 //            }
 //            return false;
 //        }
-        
     }
-    
-    
+
 // returns the last Day of the month if month > 12 it returns -1
     public static int getLastDayOfMonth(int month, int year) {
-        if(!(month > 12)){
-            
-            
-        if (month == 2) {
-        return isLeapYear(year) ? (byte) 29 : (byte) 28;
-        }else if (month == 4 || month == 6 ||month == 9 ||month == 11){
-        return 30;
-        }else {
-        return 31;
-        }
-        
+        if (0 < month && month < 13) {
+            if (month == 2) {
+                return isLeapYear(year) ? (byte) 29 : (byte) 28;
+            } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                return 30;
+            } else {
+                return 31;
+            }
+
 //        OR WE CAN HAVE FOLLOWING IMPLEMENTATIONS
-
 //A
-
 //            if (month == 12) {
 //                month = 1;
 //                year++;
@@ -99,9 +119,7 @@ public class Date  {
 //            dateOfInterest.toJulianNumber(1, month, year);
 //            dateOfInterest.mJulianNumber -= 1;
 //            return dateOfInterest.getDay();
-
 //B
-
 //        int lastDayOfMonth;
 //        switch (month) {
 //            case 1:
@@ -124,21 +142,18 @@ public class Date  {
 //                break;
 //        }
 //        return lastDayOfMonth;
-        
-        
-        }else{
-        return -1;
+        } else {
+            return -1;
         }
     }
 
-
     private int toJulianNumber(int day, int month, int year) {
-         return (1461 * (year + 4800 + (month - 14)/12))/4 +(367 * (month - 2 - 12 * 
-                ((month - 14)/12)))/12 - (3 * ((year + 4900 + (month- 14)/12)/100))/4 + day - 32075; 
+        return (1461 * (year + 4800 + (month - 14) / 12)) / 4 + (367 * (month - 2 - 12
+                * ((month - 14) / 12))) / 12 - (3 * ((year + 4900 + (month - 14) / 12) / 100)) / 4 + day - 32075;
     }
-    
-    private int[] fromJulianNumber(int mJulianNumber){
-         int l = mJulianNumber + 68569;
+
+    private int[] fromJulianNumber(int mJulianNumber) {
+        int l = mJulianNumber + 68569;
         int n = (4 * l) / 146097;
         l = l - (146097 * n + 3) / 4;
         int i = (4000 * (l + 1)) / 1461001;
@@ -154,32 +169,34 @@ public class Date  {
         a[2] = year;
         return a;
     }
-    
-     public static Boolean isValidDate( int day, int month, int year ){
-    	 //day range: 1-31
-    	 if(day <= 0 || day >31)
-    		 	return false;
-    	 //Leap year or not
-    	 boolean leap = isLeapYear(year);
-         
-    	//check Feb.	
-    	 if(month == 2){
-    		 if(leap && day > 29){
-    			 return false;
-    		 }else if(!leap && day > 28){
-    			 return false;
-    		 }
-    		 return true;
-    	 }
-    	 //Initial days in different months
-    	 int[] monList = {1,3,4,5,6,7,8,9,10,11,12};
-    	 int[] dayList = {31,31,30,31,30,31,31,30,31,30,31};
-    	 for(int i = 0; i < monList.length; i++){
-    		 if(month == monList[i] && day <= dayList[i]){
-    				 return true;
-    		 }
-    	 }
-    	 return false;
-     };
+
+    public static Boolean isValidDate(int day, int month, int year) {
+        //day range: 1-31
+        if (day <= 0 || day > 31) {
+            return false;
+        }
+        //Leap year or not
+        boolean leap = isLeapYear(year);
+
+        //check Feb.	
+        if (month == 2) {
+            if (leap && day > 29) {
+                return false;
+            } else if (!leap && day > 28) {
+                return false;
+            }
+            return true;
+        }
+        //Initial days in different months
+        int[] monList = {1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        int[] dayList = {31, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        for (int i = 0; i < monList.length; i++) {
+            if (month == monList[i] && day <= dayList[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+;
 
 }
