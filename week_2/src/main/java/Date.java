@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.time.Month;
 /**
  *
  * @author Group2
@@ -15,10 +15,16 @@ public class Date {
     private int month;
     private int year;
     private int mJulianNumber;
+    
+    public String getDateFromJulianNumber(int jNumber){
+        return fromJulianNumber(jNumber);
+    }
 
     public int getmJulianNumber() {
-        return mJulianNumber;
+        return toJulianNumber(day, month, year);
     }
+    
+    
 
     private Date date;
 
@@ -152,22 +158,32 @@ public class Date {
                 * ((month - 14) / 12))) / 12 - (3 * ((year + 4900 + (month - 14) / 12) / 100)) / 4 + day - 32075;
     }
 
-    private int[] fromJulianNumber(int mJulianNumber) {
-        int l = mJulianNumber + 68569;
-        int n = (4 * l) / 146097;
-        l = l - (146097 * n + 3) / 4;
-        int i = (4000 * (l + 1)) / 1461001;
-        l = l - (1461 * i) / 4 + 31;
-        int j = (80 * l) / 2447;
-        int day = l - (2447 * j) / 80;
-        l = j / 11;
-        int month = j + 2 - (12 * l);
-        int year = 100 * (n - 49) + i + l;
-        int[] a = new int[3];
-        a[0] = day;
-        a[1] = month;
-        a[2] = year;
-        return a;
+    private String fromJulianNumber(int mJulianNumber) {
+        long f = mJulianNumber + 1401 + (((4 * mJulianNumber + 274277) / 146097) * 3) / 4 -38;
+        long e = 4 * f + 3;
+        long g = e % 1461 / 4;
+        long h = 5 * g + 2;
+        long day = (h % 153) / 5 + 1;
+        long month = (h / 153 + 2) % 12 + 1;
+        long year = (e / 1461) - 4716 + (12 + 2 - month) / 12;
+        
+        // Check to see if the year is negative. If so, make it positive.
+        // Append B.C. or A.D. to the date string.
+        String era = "";
+        if (year < 0) {
+          era = " B.C.";
+          year = Math.abs(year);
+        }else {
+          era = " A.D.";
+        }
+        
+        // Clean up the output.
+        // Convert the number of the month to its name using Java.time.
+        // Make the year four digits with leading zeros if necessary.
+        int monthInt = (int) month;
+        Month monthName = Month.of(monthInt); 
+        String padedYear = String.format("%04d", year);
+        return  monthName + " " + ((day < 10) ? "0" : "") + day   + ", " + padedYear + era;
     }
 
     public static Boolean isValidDate(int day, int month, int year) {

@@ -21,7 +21,10 @@ public class Main {
             System.out.println("Enter your choice\n 1. Enter a Differnt Date"
                     + "\n 2. Get Day \n 3. Get Month \n 4. Get Year"
                     + "\n 5. Leap year check"
-                    + "\n 6. Get Max days of month \n ");
+                    + "\n 6. Get Max days of month "
+                    + "\n 7. Get Julian Number"
+                    + "\n 8. Get Date from Julian Number"
+                    + "\n 9. Quit");
             // Create a scanner for the user to enter a menu option.
             Scanner scanner = new Scanner(System.in);
             final int choice = scanner.nextInt();
@@ -65,8 +68,19 @@ public class Main {
                         System.out.println("Months should be between 1 to 12!!");
                     }
                     break;
-                // The user quits the application.
+
                 case 7:
+                    System.out.println("Get the Julian Number \n");
+                    System.out.println(" Julian Number: "+date.getmJulianNumber());
+                    break;
+                case 8:
+                    System.out.println("Get the Gregorian Date from Julian Number \n");
+                    System.out.println("Enter a Julian Number");
+                    Scanner jNumber = new Scanner(System.in);
+                    System.out.println(" Gregorian Date: "+date.getDateFromJulianNumber(jNumber.nextInt()));
+                    break;
+                // The user quits the application.
+                case 9:
                     System.out.println("Quiting....\n");
                     System.exit(0);
                     break;
