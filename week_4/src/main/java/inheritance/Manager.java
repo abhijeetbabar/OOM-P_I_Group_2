@@ -7,29 +7,27 @@ package inheritance;
 
 /**
  *
- * @author Kay
+ * @author Group 2
  */
-public class Manager extends Employee{
-//
-//    public Manager(String string, double d) {
-//        super(string, d);
-//    }
+public class Manager extends Employee {
+
+    private double bonus;
+// Manager constructor
+
     public Manager(String name, double salary) {
-		super(name, salary);
-		bonus = salary * bonus / 100;
-	}
-//    public void raiseSalary(double byPercent); 
+        super(name, salary);
+        bonus = salary * bonus / 100;
+    }
+
+//    Get employee salary
     public double getSalary() {
-		// no direct access to private variables of superclass
-		double baseSalary = super.getSalary();
-		return baseSalary + bonus;
-	}
+        // no direct access to private variables of superclass
+        double baseSalary = super.getSalary();
+        return baseSalary + bonus;
+    }
+// Setting bonus for the employee
 
-	public void setBonus(double b) {
-		bonus = b;
-	}
-	
-
-	private double bonus;
-    
+    public void setBonus(double b) {
+        bonus = b * getSalary() / 100;
+    }
 }

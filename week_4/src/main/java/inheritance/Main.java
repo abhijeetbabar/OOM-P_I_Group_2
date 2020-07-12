@@ -7,75 +7,98 @@ package inheritance;
 
 /**
  *
- * @author Kay
+ * @author Group 2
  */
 import java.util.Scanner;
 
 public class Main {
-     
-private static class employee {
 
-        private static String getLastName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-//IDE came up with this code suggestion
-
-        private static String getFirstName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static String getSalary() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        public employee() {
-        }
-             
     public static void main(String[] args) {
-        System.out.println("Welcome to the Employee Database");
-        
-                         
-        getNameFromUser();
+        System.out.println("=== Welcome to the Employee Database ===");
+        System.out.println("Enter N to add a new employee.");
+        System.out.println("Enter Q to quit.");
+        // getNameFromUser();
         while (true) {
-            System.out.println("Please enter your choice\n"
-                    + "\n 1. Get last name"
-                    + "\n 2. Get first name"
-                    + "\n 3. Get salary"
-                    + "\n 4. Quit"); 
-                            
-           //creates scanner for user to input data
+            //creates scanner for user to input data
             Scanner scanner = new Scanner(System.in);
-            final int choice = scanner.nextInt();
-            
-            
-            switch (choice) {
-                case 1:
-                    System.out.println("Please enter first name\n");
-                    System.out.println("First Name: " + employee.getFirstName() + "\n");
-                    break;
-                case 2:
-                    System.out.println("Get last name\n)");
-                    System.out.println("Last Name: " + employee.getLastName() + "\n");
-                    break;
-                case 3: 
-                    System.out.println("Get salary\n");
-                    System.out.println("Salary: " + employee.getSalary() + "\n");
-                case 4:
-                    System.out.println("Quiting....\n");
-                    System.exit(0);
-                    break;
-               
-                default:
-                    System.out.println("Error: Invalid Employee name. Please enter a new name. \n");
+            // final int choice = scanner.nextInt();
+            char ch = scanner.next().charAt(0);
+            if (ch == 'q' || ch == 'Q') {
+                System.out.println("Quiting....\n");
+                System.exit(0);
+            } else if (ch == 'n' || ch == 'N') {
+                getData();
+            } else {
+                System.out.println("Please enter 'N' or 'Q' \n");
             }
-                   
         }
+    } // Close PSVM
+
+    private static void getData() {
+        System.out.println("Please enter the employee's first name.");
+        Scanner scnFirstName = new Scanner(System.in);
+        String firstName = scnFirstName.nextLine();
+
+        System.out.println("Please enter the employee's last name.");
+        Scanner scnLastName = new Scanner(System.in);
+        String lastName = scnLastName.nextLine();
+
+        String fullName = firstName + " " + lastName;
+
+        System.out.println("Please enter the employee's salary.");
+        Scanner scnSalary = new Scanner(System.in);
+        double salary = scnSalary.nextDouble();
+
+        System.out.println("Please enter the employee's raise percentage.");
+        Scanner scnPercentage = new Scanner(System.in);
+        double raisePercentage = scnPercentage.nextDouble();
+
+        System.out.println("Is the employee a manager (Y/N)? ");
+        Scanner scnManager = new Scanner(System.in);
+        char yn = scnManager.next().charAt(0);
+        boolean isManager = false;
+        if (yn == 'Y' || yn == 'y') {
+            isManager = true;
+        }
+
+        System.out.println("Employee's name is: " + fullName);
+        System.out.println("Employee's salary is: $ " + salary);
+        System.out.println("Employee's percentage raise is: " + raisePercentage + " %");
+
+        if (isManager) {
+            Manager newManager = new Manager(fullName, salary);
+            if (raisePercentage > 0) {
+                newManager.raiseSalary(raisePercentage);
+                newManager.setBonus(1);
+                System.out.println("Manager's salary after the raise is: $ " + newManager.getSalary());
+            }
+        } else {
+            Employee newEmployee = new Employee(fullName, salary);
+            if (raisePercentage > 0) {
+                newEmployee.raiseSalary(raisePercentage);
+                System.out.println("Employee's salary after the raise is: $ " + newEmployee.getSalary());
+            }
+        }
+        System.exit(0);
     }
 
-    private static void getNameFromUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static void getLastName() {
+        Scanner scnLastName = new Scanner(System.in);
+        String lastName = scnLastName.nextLine();
+        System.out.println("Employee's last name is " + lastName);
+    }
+
+    private static void getSalary() {
+        Scanner scnSalary = new Scanner(System.in);
+        String salary = scnSalary.nextLine();
+        System.out.println("Employee's salary is " + salary);
     }
 
     
+    private static void getRaise() {
+        Scanner scnRaise = new Scanner(System.in);
+        String raise = scnRaise.nextLine();
+        System.out.println("Employee's salary is " + raise);
     }
-}
+
+} // Close Main
